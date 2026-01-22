@@ -1,4 +1,4 @@
-import jobs from '../jobs.json' with { type: json }
+import jobs from '../jobs.json' with { type: 'json' }
 
 export class JobModel {
 
