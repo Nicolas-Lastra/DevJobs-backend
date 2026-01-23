@@ -1,3 +1,5 @@
+import * as z from 'zod'
+
 // TypesCript se ejecuta en Build Time
 // Zod se ejecuta en Run Time
 const jobSchema = z.object({
@@ -10,7 +12,7 @@ const jobSchema = z.object({
     empresa: z.string(),
     ubicacion: z.string(),
     descripcion: z.string().optional(),
-    data: z.obect({
+    data: z.object({
         technology: z.array(z.string()),
         modalidad: z.string(),
         nivel: z.string(),
@@ -22,5 +24,5 @@ export function validateJob(input) {
 }
 
 export function validatePartialJob(input) {
-    return jobSchema
+    return jobSchema.partial().safeParse(input)
 }
