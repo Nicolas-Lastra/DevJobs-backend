@@ -16,6 +16,12 @@ const jobSchema = z.object({
         technology: z.array(z.string()),
         modalidad: z.string(),
         nivel: z.string(),
+    }),
+    content: z.object({
+        description: z.string(),
+        responsibilities: z.string(),
+        requirements: z.string(),
+        about: z.string()
     })
 })
 

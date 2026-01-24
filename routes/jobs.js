@@ -15,6 +15,15 @@ function validateCreate (req, res, next) {
 }
 
 function validateupdate (req, res, next) {
+    const result = validateJob(req.body)
+    if (!result.success) {
+        return res.status(400).json({ error: JSON.parse(result.error.message) })
+    }
+    req.body = result.data
+    next()
+}
+
+function validatePartialUpdate (req, res, next) {
     const result = validatePartialJob(req.body)
     if (!result.success) {
         return res.status(400).json({ error: JSON.parse(result.error.message) })
@@ -27,5 +36,5 @@ jobsRouter.get('/', JobController.getAll)
 jobsRouter.get('/:id', JobController.getId)
 jobsRouter.post('/', validateCreate, JobController.create)
 jobsRouter.put('/:id', validateupdate, JobController.update)
-jobsRouter.patch('/:id', JobController.partialUpdate)
+jobsRouter.patch('/:id', validatePartialUpdate, JobController.partialUpdate)
 jobsRouter.delete('/:id', JobController.delete)

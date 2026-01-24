@@ -7,9 +7,9 @@ export class JobModel {
 
         if(text) {
             const searchTerm = text.toLocaleLowerCase()
-            filteredJobs = filteredJobs.filter(job => {
+            filteredJobs = filteredJobs.filter(job => 
                 job.titulo.toLowerCase().includes(searchTerm) || job.descripcion.toLowerCase().includes(searchTerm)
-            })
+            )
         }
 
         if (technology) {
@@ -48,5 +48,37 @@ export class JobModel {
         return newJob
     }
 
-    static async update ({  }) {}
+    static async update ({ id, titulo, empresa, ubicacion, data, content }) {
+
+        const index = jobs.findIndex(job => job.id === id)
+
+        const updatedJob = {
+            id: id,
+            titulo: titulo,
+            empresa: empresa,
+            ubicacion: ubicacion,
+            data: data,
+            content: content
+        }
+
+        jobs[index] = updatedJob
+
+        return updatedJob
+    }
+
+    static async partialupdate ({id, changes}) {
+        const index = jobs.findIndex(job => job.id === id)
+        const previousJob = jobs.find(job => job.id === id)
+
+        const partiallyUpdatedJob = {...previousJob, ...changes}
+
+        jobs[index] = partiallyUpdatedJob
+
+        return partiallyUpdatedJob
+    }
+
+    static async delete(id) {
+        const index = jobs.findIndex(job => job.id === id)
+        jobs.splice(index, 1)
+    }
 }
